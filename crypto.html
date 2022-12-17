@@ -1,0 +1,22 @@
+# Öncelikle, gerekli kütüphaneleri içe aktarın.
+from Crypto.Cipher import AES
+import base64
+
+# Daha sonra, mesajınızı ve anahtarınızı tanımlayın.
+mesaj = "Merhaba, bu bir örnek mesajdır."
+anahtar = "gizliAnahtar123"
+
+# Şimdi, mesajınızı AES algoritması ile şifreleyin.
+# Öncelikle, anahtarınızı 16 bayt (128 bit) olacak şekilde genişletin.
+genisletilmis_anahtar = anahtar.encode("utf-8")
+genisletilmis_anahtar = genisletilmis_anahtar + (16 - len(genisletilmis_anahtar)) * b'\x00'
+
+# Daha sonra, mesajınızı AES nesnesi ile şifreleyin.
+aes = AES.new(genisletilmis_anahtar, AES.MODE_ECB)
+sifreli_mesaj = aes.encrypt(mesaj.encode("utf-8"))
+
+# Daha sonra, şifreli mesajınızı base64 kodlaması ile dizeye dönüştürün.
+sifreli_mesaj = base64.b64encode(sifreli_mesaj).decode("utf-8")
+
+# Şimdi, şifreli mesajı ekrana yazdırın.
+print(sifreli_mesaj)
